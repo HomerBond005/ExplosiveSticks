@@ -1,0 +1,9 @@
+name: ExplosiveSticks
+main: com.bukkit.homerbond005.ExSticks.ExSticks
+author: HomerBond005
+version: 1.1
+commands:
+    bs:
+        description: Have fun :)
+    ex:
+        description: Don't try this on your own.
