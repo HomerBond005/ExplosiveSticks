@@ -29,7 +29,6 @@ public class ExSticks extends JavaPlugin{
 		pc = new PermissionsChecker(this, permissionsenabled);
 		for(Player player : getServer().getOnlinePlayers()){
 			playerbools.put(player, false);
-			System.out.println("lol");
 		}
 		System.out.println("[ExplosiveSticks] is enabled.");
 	}
@@ -37,18 +36,9 @@ public class ExSticks extends JavaPlugin{
 		System.out.println("[ExplosiveSticks] is disabled.");
 	}
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args){
-		if(command.getName().equalsIgnoreCase("ex")){
-			try{
-			}catch(ArrayIndexOutOfBoundsException e){
-				sender.sendMessage("[ExSticks]: to less arguments.");
-				return true;
-			}
-			if(sender.hasPermission("ExSticks.player.explode")){
-				
-			}
-		}else if(command.getName().equalsIgnoreCase("bs")){
+		if(command.getName().equalsIgnoreCase("bs")){
 			Player player = (Player) sender;
-			if(hasPermission(player, "exsticks.boomstick.enable")){
+			if(pc.has(player, "exsticks.boomstick")){
 				if(switchBS(player)){
 					player.sendMessage(ChatColor.GREEN + "BoomStick enabled! Try it ;-)");
 				}else{
@@ -60,25 +50,12 @@ public class ExSticks extends JavaPlugin{
 				return true;
 			}
 		}
-		sender.sendMessage("[ExSticks]: type /ex help for help.");
 		return true;
-	}
-	public boolean hasPermission(Player player, String perm){
-		if(permissionsenabled){
-			if(player.hasPermission(perm)){
-				return true;
-			}
-		}else{
-			if(player.isOp()){
-				return true;
-			}
-		}
-		return false;
 	}
 	public boolean getEnabledBS(Player player){
 		return playerbools.get(player);
 	}
-	public boolean switchBS(Player player){
+	private boolean switchBS(Player player){
 		playerbools.put(player, !playerbools.get(player));
 		return playerbools.get(player);
 	}

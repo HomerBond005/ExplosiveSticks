@@ -44,7 +44,7 @@ public class ESPL implements Listener{
 				return;
 			}
 			Location playerloc;
-			if(!plugin.hasPermission(player, "exsticks.boomstick")){
+			if(!plugin.pc.has(player, "exsticks.boomstick")){
 				playerloc = player.getLocation();
 			}else{
 				playerloc = player.getTargetBlock (null, 100).getLocation();
@@ -63,7 +63,7 @@ public class ESPL implements Listener{
 				return;
 			}
 			Location playerloc;
-			if(!plugin.hasPermission(player, "exsticks.boomstick")){
+			if(!plugin.pc.has(player, "exsticks.boomstick")){
 				playerloc = player.getLocation();
 			}else{
 				playerloc = player.getTargetBlock (null, 100).getLocation();
