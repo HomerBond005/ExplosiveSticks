@@ -1,6 +1,13 @@
-package com.bukkit.homerbond005.ExSticks;
+/*
+ * Copyright HomerBond005
+ * 
+ *  Published under CC BY-NC-ND 3.0
+ *  http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+package de.HomerBond005.ExSticks;
 
-import java.util.Vector;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
@@ -8,16 +15,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import de.HomerBond005.Permissions.PermissionsChecker;
 
 public class ExSticks extends JavaPlugin{
 	PluginManager pm;
 	private final ESPL playerlistener = new ESPL(this);
-	private boolean permissionsenabled = false;
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-	Vector<PlayerBool> playerbools = new Vector();
+	private boolean permissionsenabled = true;
+	Map<Player, Boolean> playerbools = new HashMap<Player, Boolean>();
+	PermissionsChecker pc;
 	public void onEnable(){
 		pm = getServer().getPluginManager();
 		pm.registerEvents(playerlistener, this);
+		pc = new PermissionsChecker(this, permissionsenabled);
+		for(Player player : getServer().getOnlinePlayers()){
+			playerbools.put(player, false);
+			System.out.println("lol");
+		}
 		System.out.println("[ExplosiveSticks] is enabled.");
 	}
 	public void onDisable(){
@@ -36,7 +49,7 @@ public class ExSticks extends JavaPlugin{
 		}else if(command.getName().equalsIgnoreCase("bs")){
 			Player player = (Player) sender;
 			if(hasPermission(player, "exsticks.boomstick.enable")){
-				if(!switchBS(player)){
+				if(switchBS(player)){
 					player.sendMessage(ChatColor.GREEN + "BoomStick enabled! Try it ;-)");
 				}else{
 					player.sendMessage(ChatColor.GREEN + "BoomStick disabled. Now you're save.");
@@ -63,32 +76,10 @@ public class ExSticks extends JavaPlugin{
 		return false;
 	}
 	public boolean getEnabledBS(Player player){
-		int playerfound = 999999999;
-		for(int i = 0; i < playerbools.size(); i++){
-			if(playerbools.get(i).who() == player.getDisplayName()){
-				playerfound = i;
-			}
-		}
-		if(playerfound == 999999999){
-			playerbools.add(new PlayerBool(player.getDisplayName(), false));
-			return false;
-		}else{
-			return playerbools.get(playerfound).get();
-		}
+		return playerbools.get(player);
 	}
 	public boolean switchBS(Player player){
-		int playerfound = 999999999;
-		for(int i = 0; i < playerbools.size(); i++){
-			if(playerbools.get(i).who() == player.getDisplayName()){
-				playerfound = i;
-			}
-		}
-		if(playerfound == 999999999){
-			playerbools.add(new PlayerBool(player.getDisplayName(), true));
-			return true;
-		}else{
-			playerbools.get(playerfound).change(!playerbools.get(playerfound).get());
-			return !playerbools.get(playerfound).get();
-		}
+		playerbools.put(player, !playerbools.get(player));
+		return playerbools.get(player);
 	}
 }

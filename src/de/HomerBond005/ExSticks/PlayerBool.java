@@ -1,4 +1,10 @@
-package com.bukkit.homerbond005.ExSticks;
+/*
+ * Copyright HomerBond005
+ * 
+ *  Published under CC BY-NC-ND 3.0
+ *  http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+package de.HomerBond005.ExSticks;
 
 public class PlayerBool {
 	private String savedplayer;

@@ -1,4 +1,10 @@
-package com.bukkit.homerbond005.ExSticks;
+/*
+ * Copyright HomerBond005
+ * 
+ *  Published under CC BY-NC-ND 3.0
+ *  http://creativecommons.org/licenses/by-nc-nd/3.0/
+ */
+package de.HomerBond005.ExSticks;
 import net.minecraft.server.EntityTNTPrimed;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -10,11 +16,21 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ESPL implements Listener{
 	private static ExSticks plugin;
 	public ESPL(ExSticks es){
 		plugin = es;
+	}
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPlayerJoin(PlayerJoinEvent event){
+		plugin.playerbools.put(event.getPlayer(), false);
+	}
+	@EventHandler(priority = EventPriority.HIGH)
+	public void onPlayerQuit(PlayerQuitEvent event){
+		plugin.playerbools.remove(event.getPlayer());
 	}
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event){
