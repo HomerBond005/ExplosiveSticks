@@ -21,17 +21,21 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class ESPL implements Listener{
 	private static ExSticks plugin;
+	
 	public ESPL(ExSticks es){
 		plugin = es;
 	}
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerJoin(PlayerJoinEvent event){
 		plugin.playerbools.put(event.getPlayer(), false);
 	}
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerQuit(PlayerQuitEvent event){
 		plugin.playerbools.remove(event.getPlayer());
 	}
+	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onPlayerInteract(PlayerInteractEvent event){
 		Player player = event.getPlayer();
@@ -73,6 +77,7 @@ public class ESPL implements Listener{
 			
 		}
 	}
+	
 	private void spawnTNT(Location loc){
 		EntityTNTPrimed e = null;
 		CraftWorld cWorld = (CraftWorld)loc.getWorld();

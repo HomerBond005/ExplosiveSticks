@@ -1,9 +1,7 @@
 name: ExplosiveSticks
 main: de.HomerBond005.ExSticks.ExSticks
 author: HomerBond005
-version: 1.1.1
+version: 1.2
 commands:
     bs:
         description: Have fun :)
-    ex:
-        description: Don't try this on your own.

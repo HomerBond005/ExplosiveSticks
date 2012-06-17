@@ -6,8 +6,11 @@
  */
 package de.HomerBond005.ExSticks;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginManager;
@@ -15,26 +18,43 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import de.HomerBond005.Permissions.PermissionsChecker;
 
 public class ExSticks extends JavaPlugin{
-	PluginManager pm;
+	private PluginManager pm;
 	private final ESPL playerlistener = new ESPL(this);
 	private boolean permissionsenabled = true;
 	Map<Player, Boolean> playerbools = new HashMap<Player, Boolean>();
 	PermissionsChecker pc;
+	private Metrics metrics;
+	private Updater updater;
+	private Logger log;
+	
+	@Override
 	public void onEnable(){
+		log = getLogger();
 		pm = getServer().getPluginManager();
 		pm.registerEvents(playerlistener, this);
 		pc = new PermissionsChecker(this, permissionsenabled);
 		for(Player player : getServer().getOnlinePlayers()){
 			playerbools.put(player, false);
 		}
-		System.out.println("[ExplosiveSticks] is enabled.");
+		try{
+			metrics = new Metrics(this);
+			metrics.start();
+		}catch(IOException e){
+			log.log(Level.WARNING, "Error while enabling Metrics.");
+		}
+		updater = new Updater(this);
+		getServer().getPluginManager().registerEvents(updater, this);
+		log.log(Level.INFO, "is enabled.");
 	}
+	
+	@Override
 	public void onDisable(){
-		System.out.println("[ExplosiveSticks] is disabled.");
+		log.log(Level.INFO, "is disabled.");
 	}
+	
+	@Override
 	public boolean onCommand(CommandSender sender, Command command, String commandLabel, String[] args){
 		if(command.getName().equalsIgnoreCase("bs")){
 			Player player = (Player) sender;
@@ -46,15 +66,17 @@ public class ExSticks extends JavaPlugin{
 				}
 				return true;
 			}else{
-				player.sendMessage(ChatColor.RED + "Sorry, but I can't let you do this. :(");
+				pc.sendNoPermMsg(player);
 				return true;
 			}
 		}
 		return true;
 	}
+	
 	public boolean getEnabledBS(Player player){
 		return playerbools.get(player);
 	}
+	
 	private boolean switchBS(Player player){
 		playerbools.put(player, !playerbools.get(player));
 		return playerbools.get(player);
