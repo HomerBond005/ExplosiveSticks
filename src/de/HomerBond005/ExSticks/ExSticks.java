@@ -62,7 +62,7 @@ public class ExSticks extends JavaPlugin{
 				if(switchBS(player)){
 					player.sendMessage(ChatColor.GREEN + "BoomStick enabled! Try it ;-)");
 				}else{
-					player.sendMessage(ChatColor.GREEN + "BoomStick disabled. Now you're save.");
+					player.sendMessage(ChatColor.GREEN + "BoomStick disabled. Now you're safe.");
 				}
 				return true;
 			}else{
