@@ -31,6 +31,10 @@ public class ExSticks extends JavaPlugin{
 	
 	@Override
 	public void onEnable(){
+		getConfig().addDefault("updateReminderEnabled", true);
+		getConfig().options().copyDefaults(true);
+		saveConfig();
+		reloadConfig();
 		log = getLogger();
 		pm = getServer().getPluginManager();
 		pm.registerEvents(playerlistener, this);
@@ -44,7 +48,7 @@ public class ExSticks extends JavaPlugin{
 		}catch(IOException e){
 			log.log(Level.WARNING, "Error while enabling Metrics.");
 		}
-		updater = new Updater(this);
+		updater = new Updater(this, getConfig().getBoolean("updateReminderEnabled", true));
 		getServer().getPluginManager().registerEvents(updater, this);
 		log.log(Level.INFO, "is enabled.");
 	}

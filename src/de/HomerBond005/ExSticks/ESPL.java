@@ -5,11 +5,10 @@
  *  http://creativecommons.org/licenses/by-nc-nd/3.0/
  */
 package de.HomerBond005.ExSticks;
-import net.minecraft.server.EntityTNTPrimed;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TNTPrimed;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -79,16 +78,7 @@ public class ESPL implements Listener{
 	}
 	
 	private void spawnTNT(Location loc){
-		EntityTNTPrimed e = null;
-		CraftWorld cWorld = (CraftWorld)loc.getWorld();
-		net.minecraft.server.World world = (net.minecraft.server.World)(cWorld.getHandle());
-		e = new EntityTNTPrimed(world);
-		org.bukkit.entity.Entity TNT = e.getBukkitEntity();
-		world.addEntity(e);
-		Double X = loc.getX();
-		Double Y = loc.getY();
-		Double Z = loc.getZ();
-		Location location = new Location( loc.getWorld(), X, Y, Z );
-		TNT.teleport( location );
+		loc.getWorld().getBlockAt(loc).setType(Material.AIR);
+		((TNTPrimed)loc.getWorld().spawn(loc, TNTPrimed.class)).setFuseTicks(0);
 	}
 }
