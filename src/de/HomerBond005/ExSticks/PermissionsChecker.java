@@ -28,6 +28,7 @@ import de.bananaco.bpermissions.api.util.CalculableType;
  * @version v1.1.1
  * @author HomerBond005
  */
+@SuppressWarnings("deprecation")
 public class PermissionsChecker{
 	int permSys;
 	PermissionManager pexmanager;
