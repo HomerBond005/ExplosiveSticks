@@ -1,7 +1,7 @@
 name: ExplosiveSticks
-main: de.HomerBond005.ExSticks.ExSticks
+main: de.homerbond005.exsticks.ExSticks
 author: HomerBond005
-version: 1.2.1
+version: '@PROJECT_VERSION@'
 commands:
     bs:
-        description: Have fun :)
+        description: Enable the boomstick
